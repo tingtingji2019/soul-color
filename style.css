@@ -326,174 +326,372 @@ body {
 .btn-prev-q:hover { background: #e8f0f6; }
 .btn-prev-q:disabled { opacity: 0.4; cursor: not-allowed; }
 
-/* ==================== 结果页 ==================== */
+/* ==================== 结果页（米色纸张质感） ==================== */
 .result-scroll {
-  background: #f0f6fb;
+  background: #f2efe6;
   min-height: 100vh;
-  padding: 0 16px 60px;
+  padding: 0 0 60px;
   max-width: 520px;
   margin: 0 auto;
 }
 
-.result-hero {
-  background: linear-gradient(170deg, #1a3a5c, #3a7ab5);
-  border-radius: 0 0 24px 24px;
-  padding: 40px 24px 36px;
+/* ① 分享卡片 */
+.share-card {
+  background: #f5f2e9;
+  padding: 44px 26px 30px;
   text-align: center;
-  margin: 0 -16px 20px;
+  margin-bottom: 26px;
 }
-
-.result-label {
-  font-size: 11px;
-  letter-spacing: 4px;
-  color: rgba(255,255,255,0.5);
-  margin-bottom: 12px;
-}
-
-.result-writer-name {
-  font-family: 'Noto Serif SC', serif;
-  font-size: 32px;
-  font-weight: 700;
-  color: #fff;
-  margin-bottom: 4px;
-}
-
-.result-writer-en {
-  font-size: 14px;
-  color: rgba(255,255,255,0.6);
-  margin-bottom: 4px;
-  letter-spacing: 2px;
-}
-
-.result-writer-years {
-  font-size: 12px;
-  color: rgba(255,255,255,0.4);
-  margin-bottom: 16px;
-}
-
-.result-divider {
-  width: 40px;
-  height: 2px;
-  background: rgba(255,255,255,0.3);
-  margin: 0 auto 16px;
-}
-
-.result-desc {
-  font-size: 15px;
-  color: rgba(255,255,255,0.85);
-  line-height: 1.8;
-  max-width: 380px;
-  margin: 0 auto;
-}
-
-.result-match {
-  margin-top: 20px;
+.share-title {
   font-size: 13px;
-  color: rgba(255,255,255,0.5);
+  letter-spacing: 8px;
+  color: #9a917e;
+  margin-bottom: 22px;
 }
-
-.result-match strong {
-  color: rgba(255,255,255,0.8);
-  font-size: 20px;
-}
-
-.result-card {
-  background: #ffffff;
-  border-radius: 18px;
-  padding: 26px 22px;
-  box-shadow: 0 4px 20px rgba(42,90,140,0.06);
-  margin-bottom: 16px;
-}
-
-.result-card-title {
-  font-family: 'Noto Serif SC', serif;
-  font-size: 17px;
-  font-weight: 700;
-  color: #1a2a3a;
-  margin-bottom: 14px;
-  padding-bottom: 10px;
-  border-bottom: 2px solid #e8f0f6;
-}
-
-.traits-wrap {
+.share-meta {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 16px;
+  justify-content: space-between;
+  align-items: flex-start;
+  font-size: 12px;
+  color: #8a8172;
+  margin-bottom: 26px;
 }
-
-.trait-tag {
-  padding: 8px 16px;
-  border-radius: 999px;
-  font-size: 13px;
-  font-weight: 500;
-  border: 1.5px solid;
-}
-
-.shadow-text {
-  font-size: 14px;
-  color: #5a7a92;
-  line-height: 1.7;
-  padding: 14px 16px;
-  background: #f6f9fc;
-  border-radius: 12px;
-  border-left: 4px solid #3a7ab5;
-}
-
-.letter-text {
-  font-family: 'Noto Serif SC', serif;
-  font-size: 15px;
-  color: #2a4a62;
-  line-height: 2;
+.share-num em {
   font-style: italic;
+  font-weight: 700;
+  color: #4a8a8a;
 }
-
-.book-card {
-  padding: 16px;
-  background: #f6f9fc;
-  border-radius: 12px;
-  margin-bottom: 10px;
+.share-series {
+  text-align: right;
+  letter-spacing: 3px;
+  font-size: 12px;
+  color: #6a6152;
 }
-
-.book-title {
-  font-size: 15px;
-  font-weight: 600;
-  color: #1a2a3a;
+.share-series small {
+  display: block;
+  letter-spacing: 5px;
+  font-size: 10px;
+  color: #9a917e;
+  margin-top: 2px;
+}
+.share-writer-en {
+  font-family: 'Noto Serif SC', serif;
+  font-style: italic;
+  font-size: 17px;
   margin-bottom: 4px;
 }
-
-.book-author {
-  font-size: 12px;
-  color: #7a9ab5;
+.share-writer-name {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 40px;
+  font-weight: 700;
+  color: #2a2620;
+  letter-spacing: 6px;
   margin-bottom: 8px;
 }
+.share-writer-years {
+  font-size: 13px;
+  letter-spacing: 3px;
+  color: #8a8172;
+  margin-bottom: 20px;
+}
+.share-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 26px;
+}
+.share-divider::before, .share-divider::after {
+  content: '';
+  width: 44px;
+  height: 1px;
+  background: #b0a894;
+}
+.share-divider span { color: #4a8a8a; font-size: 14px; }
+.share-stanzas p {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 16px;
+  line-height: 2.1;
+  color: #3a352c;
+  margin-bottom: 18px;
+}
+.share-quote {
+  margin: 26px 0 30px;
+  padding-top: 22px;
+  border-top: 1px solid #d8d2c2;
+}
+.share-quote-text {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 17px;
+  line-height: 1.9;
+  color: #2a2620;
+  margin-bottom: 10px;
+}
+.share-quote-src {
+  font-size: 13px;
+  font-style: italic;
+  color: #4a8a8a;
+}
+.share-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-top: 18px;
+  border-top: 1px solid #d8d2c2;
+  text-align: left;
+}
+.share-book {
+  font-size: 13px;
+  color: #8a8172;
+  line-height: 1.6;
+}
+.share-book em {
+  font-size: 11px;
+  font-style: italic;
+  color: #a09884;
+}
+.share-affinity {
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: #8a8172;
+}
+.share-affinity strong {
+  font-size: 24px;
+  color: #4a8a8a;
+  margin-left: 6px;
+}
 
+/* 通用区块 */
+.result-section {
+  padding: 0 22px;
+  margin-bottom: 34px;
+}
+.section-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 13px;
+  letter-spacing: 5px;
+  color: #b06a50;
+  margin-bottom: 18px;
+}
+.section-head::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #d8d2c2;
+}
+
+/* ② 创作动机 */
+.motive-box {
+  background: #e9e4d5;
+  border-left: 3px solid #a0823c;
+  padding: 26px 22px;
+}
+.motive-quote-text {
+  font-family: 'Noto Serif SC', serif;
+  font-style: italic;
+  font-size: 17px;
+  line-height: 1.9;
+  color: #3a352c;
+  margin-bottom: 8px;
+}
+.motive-quote-src {
+  font-size: 13px;
+  font-style: italic;
+  color: #8a8172;
+  margin-bottom: 18px;
+}
+.motive-divider {
+  width: 36px;
+  height: 1px;
+  background: #b0a894;
+  margin-bottom: 18px;
+}
+.motive-p {
+  font-size: 15px;
+  line-height: 2;
+  color: #3a352c;
+  margin-bottom: 16px;
+}
+.motive-p strong { color: #2a2620; }
+.motive-p:last-child { margin-bottom: 0; }
+
+/* ③ 文学DNA */
+.dna-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.dna-tag {
+  padding: 9px 18px;
+  border: 1.5px solid;
+  border-radius: 999px;
+  font-size: 13px;
+  color: #4a4438;
+  background: #f5f2e9;
+}
+
+/* ④ 灵魂分析 */
+.analysis-box {
+  background: #f5f2e9;
+  padding: 24px 20px;
+}
+.analysis-p {
+  font-size: 15px;
+  line-height: 2;
+  color: #3a352c;
+  margin-bottom: 16px;
+}
+.analysis-p:last-of-type { margin-bottom: 0; }
+.pull-quote {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid #d8d2c2;
+  font-family: 'Noto Serif SC', serif;
+  font-style: italic;
+  font-size: 16px;
+  line-height: 1.9;
+  color: #4a8a8a;
+  text-align: center;
+}
+
+/* ⑤ 雷达图 */
+.radar-box {
+  background: #d8d2ba;
+  padding: 26px 16px;
+  text-align: center;
+}
+.radar-box canvas {
+  max-width: 100%;
+  display: block;
+  margin: 0 auto 20px;
+}
+.radar-legend {
+  display: inline-block;
+  text-align: left;
+}
+.radar-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.radar-legend-item:last-child { margin-bottom: 0; }
+.radar-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.radar-label {
+  font-size: 15px;
+  color: #4a4438;
+  width: 76px;
+}
+.radar-value {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 15px;
+  color: #6a6152;
+}
+
+/* ⑥ 文学家族 */
+.family-list { display: flex; flex-direction: column; gap: 10px; }
+.family-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background: #f5f2e9;
+}
+.family-rank {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+  font-family: 'Noto Serif SC', serif;
+}
+.family-info { flex: 1; }
+.family-name {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #2a2620;
+}
+.family-sub { font-size: 12px; color: #8a8172; }
+.family-pct {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+/* ⑦ 他会对你说 */
+.letter-box {
+  background: #f5f2e9;
+  padding: 26px 22px;
+}
+.letter-p {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 15px;
+  line-height: 2.1;
+  color: #3a352c;
+  margin-bottom: 16px;
+}
+.letter-sign {
+  text-align: right;
+  font-size: 14px;
+  color: #8a8172;
+}
+
+/* ⑧ 推荐书籍 */
+.books-wrap { display: flex; flex-direction: column; gap: 12px; }
+.book-card {
+  padding: 18px;
+  background: #f5f2e9;
+  border-left: 3px solid #a0823c;
+}
+.book-title {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #2a2620;
+  margin-bottom: 4px;
+}
+.book-author {
+  font-size: 12px;
+  color: #8a8172;
+  margin-bottom: 8px;
+}
 .book-reason {
   font-size: 13px;
-  color: #5a7a92;
-  line-height: 1.6;
+  color: #5a5446;
+  line-height: 1.7;
 }
 
 .btn-restart {
   display: block;
-  width: 100%;
+  width: calc(100% - 44px);
+  margin: 8px auto 0;
   padding: 18px;
-  background: linear-gradient(135deg, #3a7ab5, #2a5a8c);
+  background: #4a8a8a;
   color: #fff;
   border: none;
-  border-radius: 14px;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
   cursor: pointer;
-  margin-top: 8px;
-  letter-spacing: 4px;
-  box-shadow: 0 4px 20px rgba(42,90,140,0.3);
+  letter-spacing: 6px;
   transition: all 0.3s;
   font-family: 'Noto Sans SC', sans-serif;
 }
 .btn-restart:hover {
+  background: #3a7a7a;
   transform: translateY(-2px);
-  box-shadow: 0 6px 28px rgba(42,90,140,0.4);
 }
 
 /* ==================== 淡入动画 ==================== */
@@ -510,5 +708,5 @@ body {
 @media (max-width: 480px) {
   .cover-title { font-size: 32px; letter-spacing: 4px; }
   .q-text { font-size: 17px; }
-  .result-color-name { font-size: 26px; }
+  .share-writer-name { font-size: 32px; }
 }
