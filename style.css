@@ -1,0 +1,507 @@
+/* ==================== 全局 ==================== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Noto Sans SC', -apple-system, "Microsoft YaHei", sans-serif;
+  background: #f0f6fb;
+  color: #1a2a3a;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+.screen { display: none; }
+.screen.active { display: block; }
+
+/* ==================== 封面页 Panel 1 ==================== */
+.cover-panel-1 {
+  min-height: 100vh;
+  background: linear-gradient(170deg, #1a3a5c 0%, #2a5a8c 30%, #3a7ab5 60%, #5a9fd4 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.cover-decor {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.accent-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.08);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.ring-1 { width: 300px; height: 300px; }
+.ring-2 { width: 500px; height: 500px; }
+.ring-3 { width: 700px; height: 700px; }
+
+.cover-content {
+  text-align: center;
+  z-index: 2;
+  padding: 20px;
+  max-width: 480px;
+}
+
+.cover-label {
+  font-size: 12px;
+  letter-spacing: 6px;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 20px;
+  font-weight: 300;
+}
+
+.cover-title {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 42px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 8px;
+  margin-bottom: 12px;
+}
+
+.cover-subtitle {
+  font-size: 18px;
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 24px;
+  font-weight: 300;
+}
+
+.cover-desc {
+  font-size: 14px;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.8;
+  margin-bottom: 32px;
+}
+
+.cover-stats {
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 40px;
+  letter-spacing: 1px;
+}
+
+.btn-scroll {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.7);
+  padding: 12px 32px;
+  border-radius: 999px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s;
+  letter-spacing: 2px;
+}
+.btn-scroll:hover {
+  border-color: rgba(255,255,255,0.6);
+  color: #fff;
+}
+
+/* ==================== 封面页 Panel 2 ==================== */
+.cover-panel-2 {
+  background: #f0f6fb;
+  padding: 60px 20px 80px;
+}
+
+.panel2-inner {
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.panel2-title {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: #1a2a3a;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.panel2-subtitle {
+  font-size: 14px;
+  color: #7a8e9e;
+  text-align: center;
+  margin-bottom: 36px;
+  line-height: 1.6;
+}
+
+.color-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+
+.color-card {
+  padding: 18px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(0,0,0,0.06);
+  transition: transform 0.2s;
+}
+.color-card:hover { transform: translateY(-2px); }
+
+.color-card-name {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 3px;
+}
+
+.color-card-en {
+  font-size: 11px;
+  color: #8a9eae;
+  margin-bottom: 6px;
+}
+
+.color-card-keyword {
+  font-size: 12px;
+  color: #6a7e8e;
+}
+
+.btn-start {
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
+  padding: 18px;
+  background: linear-gradient(135deg, #3a7ab5, #2a5a8c);
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 6px;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 20px rgba(42,90,140,0.3);
+}
+.btn-start:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 28px rgba(42,90,140,0.4);
+}
+
+/* ==================== 测试页 ==================== */
+.quiz-topbar {
+  background: linear-gradient(135deg, #2a5a8c, #3a7ab5);
+  padding: 14px 16px 12px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.brand {
+  font-size: 14px;
+  color: rgba(255,255,255,0.9);
+  font-weight: 500;
+  letter-spacing: 2px;
+}
+
+.progress-dots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 8px 0 6px;
+}
+
+.progress-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.25);
+  transition: background 0.3s;
+}
+.progress-dot.done { background: rgba(255,255,255,0.8); }
+.progress-dot.current { background: #fff; box-shadow: 0 0 6px rgba(255,255,255,0.5); }
+
+.progress-bar-wrap {
+  height: 3px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: rgba(255,255,255,0.85);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+.progress-text {
+  font-size: 12px;
+  color: rgba(255,255,255,0.6);
+}
+
+.quiz-body {
+  background: #f0f6fb;
+  min-height: calc(100vh - 100px);
+  padding: 20px 16px 40px;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.question-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 28px 22px;
+  box-shadow: 0 4px 20px rgba(42,90,140,0.06);
+  margin-bottom: 16px;
+}
+
+.q-category {
+  font-size: 12px;
+  color: #7a9ab5;
+  letter-spacing: 3px;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.q-badge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  color: #3a7ab5;
+  letter-spacing: 2px;
+  margin-bottom: 14px;
+}
+
+.q-text {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 19px;
+  font-weight: 600;
+  color: #1a2a3a;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.options-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.option-btn {
+  display: block;
+  width: 100%;
+  padding: 16px 18px;
+  border: 2px solid transparent;
+  border-radius: 14px;
+  font-size: 15px;
+  line-height: 1.5;
+  cursor: pointer;
+  transition: all 0.25s;
+  text-align: left;
+  font-family: 'Noto Sans SC', sans-serif;
+}
+.option-btn:hover {
+  transform: translateX(4px);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+.option-btn.selected {
+  border-color: currentColor;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+}
+
+.btn-prev-q {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  background: #ffffff;
+  border: 1px solid #d8e4ee;
+  border-radius: 12px;
+  font-size: 14px;
+  color: #5a7a92;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Noto Sans SC', sans-serif;
+}
+.btn-prev-q:hover { background: #e8f0f6; }
+.btn-prev-q:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* ==================== 结果页 ==================== */
+.result-scroll {
+  background: #f0f6fb;
+  min-height: 100vh;
+  padding: 0 16px 60px;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.result-hero {
+  background: linear-gradient(170deg, #1a3a5c, #3a7ab5);
+  border-radius: 0 0 24px 24px;
+  padding: 40px 24px 36px;
+  text-align: center;
+  margin: 0 -16px 20px;
+}
+
+.result-label {
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 12px;
+}
+
+.result-color-name {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.result-color-en {
+  font-size: 14px;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 16px;
+  letter-spacing: 2px;
+}
+
+.result-divider {
+  width: 40px;
+  height: 2px;
+  background: rgba(255,255,255,0.3);
+  margin: 0 auto 16px;
+}
+
+.result-desc {
+  font-size: 15px;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.8;
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+.result-match {
+  margin-top: 20px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+}
+
+.result-match strong {
+  color: rgba(255,255,255,0.8);
+  font-size: 20px;
+}
+
+.result-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 26px 22px;
+  box-shadow: 0 4px 20px rgba(42,90,140,0.06);
+  margin-bottom: 16px;
+}
+
+.result-card-title {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: #1a2a3a;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #e8f0f6;
+}
+
+.traits-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.trait-tag {
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  border: 1.5px solid;
+}
+
+.shadow-text {
+  font-size: 14px;
+  color: #5a7a92;
+  line-height: 1.7;
+  padding: 14px 16px;
+  background: #f6f9fc;
+  border-radius: 12px;
+  border-left: 4px solid #3a7ab5;
+}
+
+.letter-text {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 15px;
+  color: #2a4a62;
+  line-height: 2;
+  font-style: italic;
+}
+
+.book-card {
+  padding: 16px;
+  background: #f6f9fc;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+.book-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1a2a3a;
+  margin-bottom: 4px;
+}
+
+.book-author {
+  font-size: 12px;
+  color: #7a9ab5;
+  margin-bottom: 8px;
+}
+
+.book-reason {
+  font-size: 13px;
+  color: #5a7a92;
+  line-height: 1.6;
+}
+
+.btn-restart {
+  display: block;
+  width: 100%;
+  padding: 18px;
+  background: linear-gradient(135deg, #3a7ab5, #2a5a8c);
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 8px;
+  letter-spacing: 4px;
+  box-shadow: 0 4px 20px rgba(42,90,140,0.3);
+  transition: all 0.3s;
+  font-family: 'Noto Sans SC', sans-serif;
+}
+.btn-restart:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 28px rgba(42,90,140,0.4);
+}
+
+/* ==================== 淡入动画 ==================== */
+.fade-enter {
+  animation: fadeIn 0.6s ease forwards;
+  opacity: 0;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==================== 响应式 ==================== */
+@media (max-width: 480px) {
+  .cover-title { font-size: 32px; letter-spacing: 4px; }
+  .q-text { font-size: 17px; }
+  .result-color-name { font-size: 26px; }
+}
