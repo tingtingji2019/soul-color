@@ -164,79 +164,226 @@ function getTopWriters() {
   return ranked;
 }
 
+// 罗马数字
+function toRoman(num) {
+  const map = [[10,'X'],[9,'IX'],[5,'V'],[4,'IV'],[1,'I']];
+  let r = '';
+  for (const [v, s] of map) { while (num >= v) { r += s; num -= v; } }
+  return r;
+}
+
+// 把 **text** 转成 <strong>
+function boldify(text) {
+  return text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+}
+
+// ==================== 雷达图 ====================
+function drawRadar(canvasId, radar) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const cx = W / 2, cy = H / 2;
+  const R = Math.min(W, H) / 2 - 46;
+  const dims = RADAR_DIMS;
+  const n = dims.length;
+
+  ctx.clearRect(0, 0, W, H);
+
+  // 背景网格（4层六边形）
+  for (let ring = 1; ring <= 4; ring++) {
+    const rr = R * ring / 4;
+    ctx.beginPath();
+    for (let i = 0; i <= n; i++) {
+      const ang = -Math.PI / 2 + (i % n) * (2 * Math.PI / n);
+      const x = cx + rr * Math.cos(ang);
+      const y = cy + rr * Math.sin(ang);
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = 'rgba(120,110,90,0.18)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  }
+  // 轴线
+  for (let i = 0; i < n; i++) {
+    const ang = -Math.PI / 2 + i * (2 * Math.PI / n);
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx + R * Math.cos(ang), cy + R * Math.sin(ang));
+    ctx.strokeStyle = 'rgba(120,110,90,0.15)';
+    ctx.stroke();
+  }
+
+  // 数据多边形
+  ctx.beginPath();
+  const pts = [];
+  for (let i = 0; i < n; i++) {
+    const val = (radar[dims[i].key] || 50) / 100;
+    const ang = -Math.PI / 2 + i * (2 * Math.PI / n);
+    const x = cx + R * val * Math.cos(ang);
+    const y = cy + R * val * Math.sin(ang);
+    pts.push([x, y]);
+    if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+  }
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(160,130,70,0.22)';
+  ctx.fill();
+  ctx.strokeStyle = '#a0823c';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  // 数据点
+  pts.forEach(([x, y]) => {
+    ctx.beginPath();
+    ctx.arc(x, y, 4, 0, Math.PI * 2);
+    ctx.fillStyle = '#a0823c';
+    ctx.fill();
+  });
+
+  // 标签
+  ctx.font = '13px "Noto Sans SC", sans-serif';
+  ctx.fillStyle = '#8a8070';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  for (let i = 0; i < n; i++) {
+    const ang = -Math.PI / 2 + i * (2 * Math.PI / n);
+    const lx = cx + (R + 26) * Math.cos(ang);
+    const ly = cy + (R + 22) * Math.sin(ang);
+    ctx.fillText(dims[i].label, lx, ly);
+  }
+}
+
 // ==================== 结果页 ====================
 function showResult() {
   const ranked = getTopWriters();
   const top = ranked[0];
-  const top2 = ranked[1];
-  const top3 = ranked[2];
+  const detail = WRITER_DETAILS[top.id];
+  const rankIndex = WRITERS.findIndex(w => w.id === top.id) + 1;
 
   document.getElementById('quiz-page').classList.remove('active');
   document.getElementById('result-page').classList.add('active');
 
   const scroll = document.getElementById('result-scroll');
   scroll.innerHTML = `
-    <!-- 主结果卡片 -->
-    <div class="result-hero fade-enter" style="background:linear-gradient(170deg, ${top.color}dd, ${top.color}88)">
-      <div class="result-label">ANIMA LITTERARIA / 文学灵魂索引</div>
-      <div class="result-writer-name">${top.name}</div>
-      <div class="result-writer-en">${top.enName}</div>
-      <div class="result-writer-years">${top.years}</div>
-      <div class="result-divider"></div>
-      <div class="result-desc">${top.desc}</div>
-      <div class="result-match">灵魂匹配度 <strong>${top.percentage}%</strong></div>
-    </div>
-
-    <!-- 灵魂特质 -->
-    <div class="result-card fade-enter" style="animation-delay:0.1s">
-      <div class="result-card-title">你们共享的文学DNA</div>
-      <div class="traits-wrap">
-        ${top.traits.map(t => `<span class="trait-tag" style="color:${top.color}; border-color:${top.color}40; background:${top.color}10">${t}</span>`).join('')}
+    <!-- ① 分享卡片 -->
+    <div class="share-card fade-enter">
+      <div class="share-title">你 的 作 家 灵 魂 是</div>
+      <div class="share-meta">
+        <span class="share-num">N° <em>${toRoman(rankIndex)}</em> / XVI</span>
+        <span class="share-series">ANIMA LITTERARIA<br><small>文 学 灵 魂 索 引</small></span>
       </div>
-      <div class="shadow-text" style="border-left-color:${top.color}">
-        <strong>你的阴影面：</strong>${top.shadow}
+      <div class="share-writer-en" style="color:${top.color}">${top.enName}</div>
+      <div class="share-writer-name">${top.name}</div>
+      <div class="share-writer-years">${top.years.replace('-', ' — ')}</div>
+      <div class="share-divider"><span>✦</span></div>
+      <div class="share-stanzas">
+        ${detail.shareStanzas.map(st => `<p>${st.join('<br>')}</p>`).join('')}
+      </div>
+      <div class="share-quote">
+        <div class="share-quote-text">${detail.quote.text}</div>
+        <div class="share-quote-src">— 《${detail.quote.source.replace(/[《》]/g, '')}》</div>
+      </div>
+      <div class="share-footer">
+        <span class="share-book">《文学灵魂之书》<br><em>A Book of Literary Souls</em></span>
+        <span class="share-affinity">AFFINITY <strong>${top.percentage}%</strong></span>
       </div>
     </div>
 
-    <!-- 成长建议 -->
-    <div class="result-card fade-enter" style="animation-delay:0.2s">
-      <div class="result-card-title">专属成长建议</div>
-      <div class="shadow-text" style="border-left-color:${top.color}">${top.letter}</div>
-    </div>
-
-    <!-- 推荐书籍 -->
-    <div class="result-card fade-enter" style="animation-delay:0.3s">
-      <div class="result-card-title">为你推荐的书</div>
-      ${top.books.map(b => `
-        <div class="book-card">
-          <div class="book-title">${b.title}</div>
-          <div class="book-author">${b.author}</div>
-          <div class="book-reason">${b.reason}</div>
+    <!-- ② 他的创作动机 -->
+    <div class="result-section fade-enter" style="animation-delay:0.1s">
+      <div class="section-head">他 的 创 作 动 机</div>
+      <div class="motive-box">
+        <div class="motive-quote">
+          <div class="motive-quote-text">${detail.quote.text}</div>
+          <div class="motive-quote-src">— 《${detail.quote.source.replace(/[《》]/g, '')}》</div>
         </div>
-      `).join('')}
+        <div class="motive-divider"></div>
+        ${detail.motive.map(p => `<p class="motive-p">${boldify(p)}</p>`).join('')}
+      </div>
     </div>
 
-    <!-- 灵魂家族 -->
-    <div class="result-card fade-enter" style="animation-delay:0.4s">
-      <div class="result-card-title">你的文学家族</div>
-      <p style="font-size:14px; color:#5a7a92; margin-bottom:14px; line-height:1.7;">与你最契合的前三位作家：</p>
-      ${[top, top2, top3].map((w, i) => `
-        <div style="display:flex; align-items:center; gap:14px; padding:14px; background:#f6f9fc; border-radius:12px; margin-bottom:10px;">
-          <div style="width:36px; height:36px; border-radius:50%; background:${w.color}; display:flex; align-items:center; justify-content:center; color:#fff; font-size:14px; font-weight:700; flex-shrink:0; font-family:'Noto Serif SC',serif;">${['I','II','III'][i]}</div>
-          <div style="flex:1;">
-            <div style="font-size:15px; font-weight:600; color:#1a2a3a; font-family:'Noto Serif SC',serif;">${w.name}</div>
-            <div style="font-size:12px; color:#7a9ab5;">${w.enName} · ${w.keyword}</div>
+    <!-- ③ 共享文学DNA -->
+    <div class="result-section fade-enter" style="animation-delay:0.15s">
+      <div class="section-head">你 们 共 享 的 文 学 D N A</div>
+      <div class="dna-wrap">
+        ${detail.dna.map((d, i) => `<span class="dna-tag" style="border-color:${top.color}">${d}</span>`).join('')}
+      </div>
+    </div>
+
+    <!-- ④ 灵魂分析 -->
+    <div class="result-section fade-enter" style="animation-delay:0.2s">
+      <div class="section-head">灵 魂 分 析</div>
+      <div class="analysis-box">
+        ${detail.analysis.map(p => `<p class="analysis-p">${p}</p>`).join('')}
+        <div class="pull-quote">${detail.pullQuote}</div>
+      </div>
+    </div>
+
+    <!-- ⑤ 气质雷达图 -->
+    <div class="result-section fade-enter" style="animation-delay:0.25s">
+      <div class="section-head">气 质 雷 达 图</div>
+      <div class="radar-box">
+        <canvas id="radar-canvas" width="300" height="300"></canvas>
+        <div class="radar-legend">
+          ${RADAR_DIMS.map(d => `
+            <div class="radar-legend-item">
+              <span class="radar-dot" style="background:${d.color}"></span>
+              <span class="radar-label">${d.label}</span>
+              <span class="radar-value">${detail.radar[d.key]}%</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+
+    <!-- ⑥ 你的文学家族 -->
+    <div class="result-section fade-enter" style="animation-delay:0.3s">
+      <div class="section-head">你 的 文 学 家 族</div>
+      <div class="family-list">
+        ${ranked.slice(0, 3).map((w, i) => `
+          <div class="family-item">
+            <div class="family-rank" style="background:${w.color}">${['I','II','III'][i]}</div>
+            <div class="family-info">
+              <div class="family-name">${w.name}</div>
+              <div class="family-sub">${w.enName} · ${w.keyword}</div>
+            </div>
+            <div class="family-pct" style="color:${w.color}">${w.percentage}%</div>
           </div>
-          <div style="font-size:18px; font-weight:700; color:${w.color};">${w.percentage}%</div>
-        </div>
-      `).join('')}
+        `).join('')}
+      </div>
     </div>
 
-    <!-- 重新测试 -->
-    <button class="btn-restart fade-enter" style="animation-delay:0.5s" onclick="restartQuiz()">重新鉴定</button>
+    <!-- ⑦ 他会对你说 -->
+    <div class="result-section fade-enter" style="animation-delay:0.35s">
+      <div class="section-head">他 会 对 你 说</div>
+      <div class="letter-box">
+        <p class="letter-p">${top.letter}</p>
+        <div class="letter-sign">—— ${top.name}</div>
+      </div>
+    </div>
+
+    <!-- ⑧ 为你推荐的书 -->
+    <div class="result-section fade-enter" style="animation-delay:0.4s">
+      <div class="section-head">为 你 推 荐 的 书</div>
+      <div class="books-wrap">
+        ${top.books.map(b => `
+          <div class="book-card">
+            <div class="book-title">${b.title}</div>
+            <div class="book-author">${b.author}</div>
+            <div class="book-reason">${b.reason}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+
+    <!-- ⑨ 操作按钮 -->
+    <button class="btn-restart fade-enter" style="animation-delay:0.45s" onclick="restartQuiz()">重 新 测 试</button>
   `;
 
   window.scrollTo(0, 0);
+
+  // 绘制雷达图
+  setTimeout(() => drawRadar('radar-canvas', detail.radar), 100);
 }
 
 function restartQuiz() {
