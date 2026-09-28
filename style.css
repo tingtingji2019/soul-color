@@ -132,34 +132,35 @@ body {
   line-height: 1.6;
 }
 
-.color-grid {
+.writer-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  gap: 10px;
   margin-bottom: 40px;
 }
 
-.color-card {
-  padding: 18px 16px;
-  border-radius: 14px;
+.writer-card {
+  padding: 14px 14px;
+  border-radius: 12px;
   border: 1px solid rgba(0,0,0,0.06);
   transition: transform 0.2s;
 }
-.color-card:hover { transform: translateY(-2px); }
+.writer-card:hover { transform: translateY(-2px); }
 
-.color-card-name {
+.writer-card-name {
+  font-family: 'Noto Serif SC', serif;
   font-size: 15px;
   font-weight: 600;
-  margin-bottom: 3px;
+  margin-bottom: 2px;
 }
 
-.color-card-en {
+.writer-card-en {
   font-size: 11px;
   color: #8a9eae;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
-.color-card-keyword {
+.writer-card-keyword {
   font-size: 12px;
   color: #6a7e8e;
 }
@@ -349,7 +350,7 @@ body {
   margin-bottom: 12px;
 }
 
-.result-color-name {
+.result-writer-name {
   font-family: 'Noto Serif SC', serif;
   font-size: 32px;
   font-weight: 700;
@@ -357,11 +358,17 @@ body {
   margin-bottom: 4px;
 }
 
-.result-color-en {
+.result-writer-en {
   font-size: 14px;
   color: rgba(255,255,255,0.6);
-  margin-bottom: 16px;
+  margin-bottom: 4px;
   letter-spacing: 2px;
+}
+
+.result-writer-years {
+  font-size: 12px;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 16px;
 }
 
 .result-divider {
